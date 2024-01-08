@@ -1,5 +1,8 @@
+import java.util.Set;
+
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
+import edu.macalester.graphics.events.Key;
 
 public class Human extends Entity{
     public static final double START_HEALTH = 100;
@@ -57,42 +60,41 @@ public class Human extends Entity{
         if (this.health < 0) this.health = 0;
     }
 
-    /**
-     * Updates the player location to the left
-     * @param dt
-     */
-    public void moveLeft(double dt){
-        setLocation(new Point(getLocation().getX() - this.speed * dt, getLocation().getY()));
-        updateSprite();
-    }
 
     /**
-     * updates player location to the right
+     * Move the human and rotate its sprite based on what keys are pressed.
      * @param dt
+     * @param keysPressed
      */
-    public void moveRight(double dt){
-        setLocation(new Point(getLocation().getX() + this.speed * dt, getLocation().getY()));
+    public void move(double dt, Set<Key> keysPressed) {
+        /* used as "point to rotate to". idea is that you just add this as an offset to the center 
+           and it should rotate in the 45 degree segments we need it to for the movement logic to work */
+        Point angle = new Point(0,0);
+
+        // same idea here, except you multiply by speed before applying the offset
+        Point movementOffset = new Point(0,0);
+
+        if (keysPressed.contains(Key.LEFT_ARROW) || keysPressed.contains(Key.A)) {
+            movementOffset = movementOffset.add(new Point (-1, 0));
+            angle = angle.add(new Point(-1,0));
+        }
+        if (keysPressed.contains(Key.RIGHT_ARROW) || keysPressed.contains(Key.D)) {
+            movementOffset = movementOffset.add(new Point (1, 0));
+            angle = angle.add(new Point(1,0));
+        }
+        if (keysPressed.contains(Key.UP_ARROW) || keysPressed.contains(Key.W)) {
+            System.out.println("W pressed");
+            movementOffset = movementOffset.add(new Point (0, -1));
+            angle = angle.add(new Point(0,-1));
+        }
+        if (keysPressed.contains(Key.DOWN_ARROW) || keysPressed.contains(Key.S)) {
+            movementOffset = movementOffset.add(new Point (0, 1));
+            angle = angle.add(new Point(0,1));
+        }
+
+        this.setLocation(this.getLocation().add(movementOffset.scale(speed*dt)));
+        if(!angle.equals(new Point(0,0))) rotateSpriteToPoint(this.getLocation().add(angle));
         updateSprite();
-
-    }
-
-    /**
-     * Updates player location up
-     * @param dt
-     */
-    public void moveUp(double dt){
-        setLocation(new Point(getLocation().getX(), getLocation().getY() - this.speed * dt));
-        updateSprite();
-    }
-
-    /**
-     * Updates player location downward
-     * @param dt
-     */
-    public void moveDown(double dt){
-        setLocation(new Point(getLocation().getX(), getLocation().getY() + this.speed * dt));
-        updateSprite();
-
     }
 
 }

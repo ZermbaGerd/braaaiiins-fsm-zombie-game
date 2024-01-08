@@ -233,13 +233,12 @@ public class Zombie extends Entity {
             }
 
             else {
-                //TODO add desiredRotation and rotating logic here
                 // check if our timer is running, if isn't then start our timer and up our perception range
                 if(!running) {
                     startTime = Instant.now();
                     running = true;
                     desiredRotation = rand.nextDouble(sprite.getRotation() - rotateAmount, sprite.getRotation() + rotateAmount);
-                    System.out.println(desiredRotation);
+                    //System.out.println(desiredRotation);
                 }
                 // check if the timer is longer than our allowed wait time
                 // if it is, go back to wandering and reset the timer

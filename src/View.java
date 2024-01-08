@@ -80,14 +80,13 @@ public class View {
 
         // this lambda loop runs every frame. dt is the time passed since the last frame
         canvas.animate(dt -> {
-            if (canvas.getKeysPressed().contains(Key.LEFT_ARROW) || canvas.getKeysPressed().contains(Key.A)) human.moveLeft(dt);
-            if (canvas.getKeysPressed().contains(Key.RIGHT_ARROW) || canvas.getKeysPressed().contains(Key.D)) human.moveRight(dt);
-            if (canvas.getKeysPressed().contains(Key.UP_ARROW) || canvas.getKeysPressed().contains(Key.W)) human.moveUp(dt);
-            if (canvas.getKeysPressed().contains(Key.DOWN_ARROW) || canvas.getKeysPressed().contains(Key.S)) human.moveDown(dt);
+            this.human.move(dt,canvas.getKeysPressed());
+            
             for(Zombie z: zombieList){
                 z.update(dt);
                 z.updateSprite();
             }
+
             updateHealth();
             updateTimer();
         });
@@ -124,9 +123,9 @@ public class View {
     }
 
     /**
-     * Updates player health bar and triggers lose method when player dies.. 
+     * Updates player health bar and triggers lose method when player dies.
      */
-    private void updateHealth() { //thinking of two implementations - add ten squares subtracted with corresponding heath
+    private void updateHealth() {
         Rectangle curRect;
         if(human.getHealth() == 0){
             lose();
@@ -207,8 +206,8 @@ public class View {
      * Adds the entities to the screen, including one human and described number of zombies
      * @param numZombies number of zombies to be placed on the screen
      */
-    private void addChar (int numZombies){ //TODO add different zombie speeds
-        human = new Human(new Point(100, 400));
+    private void addChar (int numZombies){ 
+        this.human = new Human(new Point(100, 400));
         canvas.add(human.getSprite());
 
         Random rand = new Random();
@@ -217,6 +216,8 @@ public class View {
             zombieList.add(zombie);
             canvas.add(zombie.getSprite());
         }  
+
+        canvas.draw();
     }
 
     public static void main(String[] args) {
