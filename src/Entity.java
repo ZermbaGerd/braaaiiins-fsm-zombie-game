@@ -3,18 +3,16 @@ import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Point;
 
 /**
- * Parent class for two types of entities Human and Zombies
+ * Parent class for the two types of entities (Human and Zombies). Handles constructors, sprite behavior, 
+ * and setter/getter methods.
  */
 public class Entity {
-    //TODO refactor these to be private
     protected Point location; // represents the center of the sprite
     protected int size; // represents the radius of the bounding circle of the sprite
     protected GraphicsObject sprite;    // the image that represents this thing
     protected double speed;
     public static final double DEFAULT_ENTITY_SPEED = 50;
     public static final int DEFAULT_ENTITY_SIZE = 15;
-
-
 
     /**
      * Creates entity and sets inital sprite to ellipse
@@ -29,7 +27,7 @@ public class Entity {
     }
 
     /**
-     * Creates entity represented as ellipse at given location point
+     * Creates entity with a circle sprite at given location point
      * @param location 
      */
     public Entity(Point location) {

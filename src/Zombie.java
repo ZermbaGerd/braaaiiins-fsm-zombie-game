@@ -69,7 +69,7 @@ public class Zombie extends Entity {
      * Returns true if this zombie's target human is within its PERCEPTION_RANGE
      * @return
      */
-    public boolean targetInRange() {    //TODO figure out how well this actually finds range - TestGUI shows a little ugly
+    public boolean targetInRange() {
         return target.getLocation().distance(this.location) <= this.perceptionRange;
     }
 
@@ -217,7 +217,6 @@ public class Zombie extends Entity {
         private double rotateAmount = 90;
         private Random rand = new Random();
         
-        //TODO make zombie rotate in a pretty way while on alert
         @Override
         public void accept(double dt) {
             // checks for needing to go back to chase first
@@ -248,6 +247,7 @@ public class Zombie extends Entity {
                     return;
                 }
                 else {
+                    // rotate sprite towards desired rotation or generate a new desired if it's already there
                     if(sprite.getRotation() == desiredRotation) {
                         desiredRotation = rand.nextDouble(sprite.getRotation() - rotateAmount, sprite.getRotation() + rotateAmount);
                     }
