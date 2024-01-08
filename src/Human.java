@@ -83,7 +83,6 @@ public class Human extends Entity{
             angle = angle.add(new Point(1,0));
         }
         if (keysPressed.contains(Key.UP_ARROW) || keysPressed.contains(Key.W)) {
-            System.out.println("W pressed");
             movementOffset = movementOffset.add(new Point (0, -1));
             angle = angle.add(new Point(0,-1));
         }
@@ -92,8 +91,14 @@ public class Human extends Entity{
             angle = angle.add(new Point(0,1));
         }
 
-        this.setLocation(this.getLocation().add(movementOffset.scale(speed*dt)));
-        if(!angle.equals(new Point(0,0))) rotateSpriteToPoint(this.getLocation().add(angle));
+        if(!movementOffset.equals(new Point(0,0))) {
+            // add the movement offset to our location - multiply by dt to avoid fps scaling on speed
+            // divide by magnitude to avoid diagonal movement being faster than horizontal/vertical because of adding to both axes
+            this.setLocation(this.getLocation().add(movementOffset.scale((speed*dt) / movementOffset.magnitude())));
+        }
+        if(!angle.equals(new Point(0,0))) {
+            rotateSpriteToPoint(this.getLocation().add(angle));
+        } 
         updateSprite();
     }
 
