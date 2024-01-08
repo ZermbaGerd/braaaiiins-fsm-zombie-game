@@ -15,8 +15,6 @@ public class TestZombie {
         Human human2 = new Human(new Point(1000, 1000));
         zombie.setTarget(human2);
         assertFalse(zombie.targetInRange());
-
-        //TODO add edge case for very close situations
     }
 
     @Test

@@ -27,18 +27,17 @@ public class Human extends Entity{
     private void initialize() {
         this.speed = DEFAULT_HUMAN_SPEED; 
 
-        this.sprite = new Image("stolenMinecraftHead.png");
-        ((Image) this.sprite).setMaxHeight(size*2);
-        ((Image) this.sprite).setMaxWidth(size*2);
+        this.sprite = new Image("mac-the-scot.png");
+        ((Image) this.sprite).setMaxHeight(size*2.5);
+        ((Image) this.sprite).setMaxWidth(size*2.5);
     }
 
     /**
-     * Checks if value is greater than zero, anf if so updates player's health variable
+     * Checks if value is greater than zero, and if so updates player's health variable
      * @param health
      */
     public void setHealth(double health) {
         if(health >= 0) this.health = health;
-        System.out.println(health);
     }
 
     /**
@@ -56,7 +55,6 @@ public class Human extends Entity{
     public void takeDamage(double damage) {
         if (this.health > 0) this.health -= damage;
         if (this.health < 0) this.health = 0;
-        System.out.println(health);
     }
 
     /**

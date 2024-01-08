@@ -12,17 +12,16 @@ public class Entity {
     protected GraphicsObject sprite;    // the image that represents this thing
     protected double speed;
     public static final double DEFAULT_ENTITY_SPEED = 50;
+    public static final int DEFAULT_ENTITY_SIZE = 15;
 
 
-
-    //TODO make size a public final variable, figure out how not to break inheritance with that
 
     /**
      * Creates entity and sets inital sprite to ellipse
      */
     public Entity() {
         this.location = new Point(0,0);
-        this.size = 10;
+        this.size = DEFAULT_ENTITY_SIZE;
         this.speed = DEFAULT_ENTITY_SPEED;
         this.sprite = new Ellipse(this.location.getX() + this.size, this.location.getY() + this.size, size*2, size*2);
         ((Ellipse) this.sprite).setFilled(true);
@@ -35,7 +34,7 @@ public class Entity {
      */
     public Entity(Point location) {
         this.location = location;
-        this.size = 10;
+        this.size = DEFAULT_ENTITY_SIZE;
         this.speed = DEFAULT_ENTITY_SPEED;
         this.sprite = new Ellipse(this.location.getX() + this.size, this.location.getY() + this.size, size*2, size*2);
         ((Ellipse) this.sprite).setFilled(true);
@@ -77,10 +76,10 @@ public class Entity {
         y = location.getY();
 
         if(x < 0) x = 0;
-        if(x > View.WIDTH) x = View.WIDTH;
+        if(x > View.CANVAS_WIDTH) x = View.CANVAS_WIDTH;
 
         if(y < 0) y = 0;
-        if(y > View.HEIGHT) y = View.HEIGHT;
+        if(y > View.CANVAS_HEIGHT) y = View.CANVAS_HEIGHT;
 
         this.location = new Point(x, y);        // TODO see if we can refactor to use testPointOnScreen
     }
@@ -93,8 +92,8 @@ public class Entity {
     public boolean testPointOnScreen(Point point) {
         if(point.getX() < 0) return false;
         if(point.getY() < 0) return false;
-        if(point.getX() > View.WIDTH) return false;
-        if(point.getY() > View.HEIGHT) return false;
+        if(point.getX() > View.CANVAS_WIDTH) return false;
+        if(point.getY() > View.CANVAS_HEIGHT) return false;
         return true;
     }
 

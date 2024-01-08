@@ -5,6 +5,9 @@ import java.time.Instant;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 
+/**
+ * Represents a zombie.
+ */
 public class Zombie extends Entity {
     private FSM brain = new FSM();
     private Point desiredLocation;  // movement involves going to this point or changing it, depending on behavior
