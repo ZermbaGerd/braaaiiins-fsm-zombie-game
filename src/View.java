@@ -1,11 +1,5 @@
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.FontStyle;
-import edu.macalester.graphics.GraphicsText;
-import edu.macalester.graphics.Rectangle;
-import edu.macalester.graphics.Image;
-import edu.macalester.graphics.Point;
-import edu.macalester.graphics.events.Key;
-import edu.macalester.graphics.ui.Button;
+import edu.macalester.graphics.*;
+import edu.macalester.graphics.ui.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -207,17 +201,29 @@ public class View {
      * @param numZombies number of zombies to be placed on the screen
      */
     private void addChar (int numZombies){ 
-        this.human = new Human(new Point(100, 400));
+        this.human = new Human(new Point(CANVAS_WIDTH/2, CANVAS_HEIGHT/2));
         canvas.add(human.getSprite());
 
         Random rand = new Random();
         for (int i = 0; i < numZombies; i++){
-            Zombie zombie = new Zombie(new Point(rand.nextInt(CANVAS_WIDTH), rand.nextInt(CANVAS_HEIGHT)), human);
+            Zombie zombie = new Zombie(pickZombieSpawnPoint(rand), human);
             zombieList.add(zombie);
             canvas.add(zombie.getSprite());
         }  
 
         canvas.draw();
+    }
+
+    /**
+     * Picks a point on screen to spawn a zombie. Recursively repeats until that point is further than 
+     * 100 pixels from the player's location
+     * @return
+     */
+    private Point pickZombieSpawnPoint(Random rand) {
+        Point spawnPoint = new Point(rand.nextInt(0, CANVAS_WIDTH), rand.nextInt(0, CANVAS_HEIGHT));
+        if(spawnPoint.distance(human.getLocation()) < 100) spawnPoint = pickZombieSpawnPoint(rand);
+
+        return spawnPoint;
     }
 
     public static void main(String[] args) {
